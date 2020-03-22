@@ -1,62 +1,52 @@
 import React from 'react'
-//import { ENODATA } from 'constants';
-import {Form, FormGroup, FormControl, ControlLabel, Button, Jumbotron, Col, Grid, Row} from 'react-bootstrap'
+import {Form, FormGroup, ControlLabel, Button, Jumbotron, Col, Grid, Row} from 'react-bootstrap'
 import Artworks from '../artworks/Artworks'
 import { fetchImages, postImage, deleteImage } from '../../state/actions/fetchArtworks'
 import { connect } from 'react-redux';
-import FieldGroup from './FieldGroup'
-import {AddArtwork} from "../../state/actions/actions"
+import SearchInput from '../inputs/SearchInput'
+import AddNewItem from '../inputs/AddNewItem'
+import MultiCarouselPage from "../inputs/MultiCarouselPage"
+import Test from "../inputs/Carousel"
+import Parent from "../inputs/Carousel_slick"
 
 
 class Gallery extends React.Component {
     state = {
-      //imgs: []
       searchName: "",
       enterName: "",
       link: "",
-      newArtwork: {author: "", description: "", link: "", zoomLink: "", title: "", photoId: "", id: 10}
+      newArtwork: {author: "", description: "", link: "", zoomLink: "", title: "", photoId: "", id: 10},
+      artworks: this.props.artworks,
+      filteredArtworks: this.props.artworks,
+      groupedArtworks: this.props.grouped
     }
 
-    handleChange = event => {
-        //debugger
+    handleChange = event => {        
         this.setState({
             [event.target.name]: event.target.value
         })
       }
 
-      handleSubmit = event => {
-        event.preventDefault()
-        //this.sendFormDataSomewhere(this.state)
+      handleSearch = (value) => {        
+        this.setState({filteredArtworks: this.state.artworks.filter(item=>item.author.includes(value))})
+        this.setState({searchName: value})
       }
 
       handleInput = event=>{
-        event.preventDefault()
-        const jsonData=Object.assign({}, this.state.newArtwork, {text: event.target.children[1].value, link: event.target.children[3].value });       
-        console.log("LOG A")      
-        this.props.postImage(jsonData)    
-        console.log("LOG B")   
-        this.setState({link: "",
-        enterName: "",})
-        //debugger
-        //add artwork to store
+        event.preventDefault()        
+        this.props.postImage({author: this.state.enterName, url: this.state.link, icon:this.state.link })            
+        this.setState({link: "", enterName: "",})        
       }
      
-      handleClick=event=>{
-        event.preventDefault();
-        //debugger
-        this.props.fetchImages(event.target.firstChild.children[1].value ) 
-        this.setState({searchName: ""})
-                  
-      }
-
-      handleDelete=event=>{
-        event.preventDefault();
-        //debugger
+      
+      handleDelete=event=>{      
         this.props.deleteImage(event.target.id)
+        this.setState({artworks: this.state.artworks.filter(item=>item.id!=event.target.id)}) 
+        
       }
       
     render() {
-      //debugger
+      console.log('grouped', this.state.groupedArtworks)
       return (        
         <div>
 
@@ -64,15 +54,7 @@ class Gallery extends React.Component {
             <Row>
               <Col xs={6} md={4}>
                   {/* search form */}
-                 
-                    <Form inline onSubmit={event=>this.handleClick(event)}>
-                      <FormGroup controlId="formInlineName">
-                        <ControlLabel>Name</ControlLabel>{' '}
-                            <input type="text" name="searchName" onChange={event => this.handleChange(event)} value={this.state.searchName} />
-                      </FormGroup>{' '}
-                      <Button type="submit" bsSize="small">Search</Button>
-                    </Form>
-                 
+                    <SearchInput update={this.handleSearch} label="Name" value={this.state.searchName}/>                    
         
               </Col>
 
@@ -94,30 +76,51 @@ class Gallery extends React.Component {
          <Jumbotron>
            {/* gallery display */}
            <Grid>
-            
-            <Artworks imgs={this.props.artworks} delete={this.handleDelete}/> 
-            
+             <h3 center="true">2017 | 2018 | 2019 | 2020  </h3> 
+             {
+               this.state.groupedArtworks ?
+               Object.keys(this.state.groupedArtworks).map(item=>
+                {
+                  return(
+                  <div>
+                   <h2>{item}</h2> <a>View</a> | <a>Edit</a> | <a>Delete</a>
+                   <Parent artworks={this.state.groupedArtworks[item]} delete={this.handleDelete} />
+                  </div> )                 
+                }
+              )
+              : <div>No Groups</div>
+            }
+            <Parent artworks={this.state.artworks} delete={this.handleDelete} />
+             
+            {
+            //<Test artworks={this.state.artworks} delete={this.handleDelete}/>
+            //<Artworks imgs={this.state.filteredArtworks} delete={this.handleDelete}/> 
+            }
             </Grid>
           </Jumbotron>
         </div>
       )
     }
  
-  
-
-      componentDidMount(){
-              
+    componentWillUpdate(){      
+      if (!this.state.artworks && this.props.artworks){                    
+          this.setState({artworks: this.props.artworks, filteredArtworks: this.props.artworks.filter(item=>item.author.includes(this.state.searchName)), groupedArtworks: this.props.grouped } );         
       }
-      
+   }
+       
 
   }
   
 
   const mapStateToProps = state => {
-    console.log("gallery", state)  
+    console.log("gallery", state)
+    let groupedArtworks=[]
+    //state.artworks.map(item=>{groupedArtworks={...groupedArtworks, [item.title]: {...groupedArtworks[item.title], [item.author]: item}} })     
+    state.artworks.map(item=>{ groupedArtworks={...groupedArtworks, [item.title]: groupedArtworks[item.title] ? [...groupedArtworks[item.title],item] : [item] }}) 
     return {
         artworks: state.artworks,
-        comments: state.comments
+        comments: state.comments,
+        grouped: groupedArtworks
     };
   };
   

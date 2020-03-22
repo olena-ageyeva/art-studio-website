@@ -41,7 +41,9 @@ class ArtworksController < ApplicationController
        params.require(:artwork).permit(
          :title,
          :icon,
-         :url
+         :url, 
+         :author,
+         :description
              )
      end
   

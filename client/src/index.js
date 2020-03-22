@@ -15,6 +15,8 @@ import { BrowserRouter as Router} from 'react-router-dom';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux'; 
 import { fetchImages } from './state/actions/fetchArtworks'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 

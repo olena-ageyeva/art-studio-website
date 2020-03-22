@@ -25,7 +25,7 @@ class Artwork extends React.Component{
 
     render(){
 
-        const link="/view?id="+this.props.img.id
+        
         //const Test = () => { return( <div> hi </div> ) };
 
         const Img= () => { 

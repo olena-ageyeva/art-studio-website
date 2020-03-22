@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   
     scope '/api' do
-      get :artwork, to: 'artworks#index'
+      get :artworks, to: 'artworks#index'
+      resources :artworks
     end
   
 end
+

@@ -5,27 +5,28 @@ import {mock_artworks} from "../mockdata"
 
   export function fetchImages(query="") {
     let imgs;
-    return (dispatch)=> dispatch(AddArtworks(mock_artworks))
+    //return (dispatch)=> dispatch(AddArtworks(mock_artworks))
 
-    // return (dispatch) => {
-    //   dispatch({ type: "LOADING_IMAGES" });
-    //   return fetch(`/artworks?q=${query}`)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       imgs=data.map(img=>({link: img.icon, text: img.title, zoomLink: img.url, id: img.id}))
-    //       dispatch(AddArtworks(imgs))
-    //     });
-    // };
+    return (dispatch) => {
+      dispatch({ type: "LOADING_IMAGES" });
+      return fetch(`/api/artworks?q=${query}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log("data", data)
+          imgs=data.map(img=>({icon: img.icon, author: img.author, title: img.description, url: img.url, id: img.id, description: img.description}))
+          dispatch(AddArtworks(imgs))
+        });
+    };
   }
 
   
   export function postImage(data={}) {
     let img;    
-    let body = JSON.stringify({artwork: {title: data.text, url_s: data.link} })
-    console.log("LOG C") 
+    let body = JSON.stringify({artwork: {title: data.title, url: data.url, author: data.author, description: data.description, icon: data.icon } })
+   
     return (dispatch) => {
       dispatch({ type: "POSTING_IMAGES" });
-      return fetch(`/artworks`, {
+      return fetch(`/api/artworks`, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.        
         headers: {
             "Content-Type": "application/json; charset=utf-8",              
@@ -36,11 +37,11 @@ import {mock_artworks} from "../mockdata"
         .then(data => {
           //debugger
           console.log("LOG D")
-          img={link: data.url_s, text: data.title, zoomLink: data.url_o, id: data.id}
+          img={icon: data.icon, author: data.author, title: data.description, url: data.url, id: data.id}
           dispatch(AddArtwork(img))
         });
     };
-    console.log("LOG E")
+    
   }
   
   
@@ -48,7 +49,7 @@ import {mock_artworks} from "../mockdata"
     //debugger
     return (dispatch) => {
       dispatch({ type: "POSTING_IMAGES" });
-      return fetch(`/artworks/`+id, {
+      return fetch(`/api/artworks/`+id, {
         method: "DELETE", // *GET, POST, PUT, DELETE, etc.        
         headers: {
             "Content-Type": "application/json; charset=utf-8",              
@@ -63,11 +64,12 @@ import {mock_artworks} from "../mockdata"
 
   export function editImage(data={}) {
     let img;    
-    let body = JSON.stringify({artwork: {title: data.text, url_s: data.link, url_o: data.zoomLink} })
+    console.log("post data", data)
+    let body = JSON.stringify({artwork: {title: data.title, url: data.url, author: data.author, description: data.description, icon: data.icon } })
     //debugger
     return (dispatch) => {
       dispatch({ type: "POSTING_CHANGES" });
-      return fetch(`/artworks/`+data.id, {
+      return fetch(`/api/artworks/`+data.id, {
         method: "PATCH", // *GET, POST, PUT, DELETE, etc.        
         headers: {
             "Content-Type": "application/json; charset=utf-8",              
@@ -76,8 +78,9 @@ import {mock_artworks} from "../mockdata"
     })
         .then(response => response.json())
         .then(data => {
+          console.log("edit", data)
           //debugger
-          img={link: data.url_s, text: data.title, zoomLink: data.url_o, id: data.id}
+          img={icon: data.icon, author: data.author, title: data.description, url: data.url, id: data.id}
           dispatch(ChangeArtwork(img))
         });
     };

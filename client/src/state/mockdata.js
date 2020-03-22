@@ -64,5 +64,10 @@ export const artworks =[
     }
   ]
 
+  
   export const mock_artworks = artworks.map(img=>({icon: img.icon, author: img.author, title: img.title, url: img.url, id: img.id}))
-    
+  
+  let groupedArtworks=[]
+  artworks.map(item=>{groupedArtworks={...groupedArtworks, [item.title]: {...groupedArtworks[item.title], [item.author]: item}} })
+
+  export const grouped=groupedArtworks

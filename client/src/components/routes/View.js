@@ -1,19 +1,31 @@
 import React from 'react'
 //import { ENODATA } from 'constants';
-import {Image, Thumbnail, Form, FormGroup, FormControl, ControlLabel, Button, Jumbotron, Col, Grid, Row} from 'react-bootstrap'
+import {Jumbotron } from 'react-bootstrap'
 import ImageView from '../artworks/ImageView'
-import { fetchImages, postImage, deleteImage, editImage } from '../../state/actions/fetchArtworks'
+import { postImage, deleteImage, editImage } from '../../state/actions/fetchArtworks'
 import { connect } from 'react-redux';
-import FieldGroup from './FieldGroup'
-import {AddArtwork} from "../../state/actions/actions"
+//import FieldGroup from './FieldGroup'
+//import {AddArtwork} from "../../state/actions/actions"
 
 
 class View extends React.Component {
-  state = {
-    id: "",
-    artwork: ""
+ constructor(props){
+  super(props) 
+  this.state = {
+    id: props.id,
+    artwork: props.artwork
   }
+}
 
+  static getDerivedStateFromProps(props, state) {    
+    if (props.artworks){
+      return {
+        artwork: props.artwork,
+        id: props.id
+      };
+    } else return null
+    
+  }
      
    
       handleInput = event=>{
@@ -25,43 +37,42 @@ class View extends React.Component {
      
       
     render() {      
-      const id=this.props.location.search.slice(4)  
-      const artwork=this.props.artworks.find(art => art.id == id);     
+      //const id=this.state.id
+      //const artwork=this.props.artworks.find(art => art.id == id); 
+      console.log("form", this.props.artwork)    
      //debugger
       return (        
         <div>      
           <Jumbotron>              
-            <ImageView img={this.state.artwork} change={this.handleInput} />             
+            <ImageView img={this.props.artwork} change={this.handleInput} />             
           </Jumbotron>        
           </div>
       )
     }
  
       componentDidMount(){
-        
-        const id=this.props.location.search.slice(4)
-        this.setState({ id: id, artwork: this.props.artworks.find(art => art.id == id) });    
-        
+        console.log("img", this.state.artwork)
+        this.setState({ id: this.props.id, artwork: this.props.artwork});    
       }     
 
-      componentWillReceiveProps(nextProps){        
-        if(nextProps.artworks !== this.props.artworks){
-           const id=nextProps.location.search.slice(4)  
-           const artwork=nextProps.artworks.find(art => art.id == id);     
-           this.setState({ id: id, artwork: artwork });
-        }
-        //debugger
-    }
+
 
   }
   
 
-  const mapStateToProps = state => {
+  const mapStateToProps = (state, ownProps) => {
+    const id=ownProps.location.pathname.split("/").slice(-1)[0]    
+    const artwork=state.artworks.find(art => art.id == id)
+    console.log("ownProps",id, artwork)        
     return {
         artworks: state.artworks,
-        comments: state.comments
+        comments: state.comments,
+        id: ownProps.location.pathname.split("/").slice(-1)[0],
+        artwork: state.artworks.find(art => art.id == id)       
     };
   };
+
+
   
   
-export default connect(mapStateToProps, {fetchImages, postImage, deleteImage, editImage})(View);
+export default connect(mapStateToProps, {postImage, deleteImage, editImage})(View);

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap';
-import { Image,Nav, Navbar, NavItem, FormGroup, FormControl, Button, Grid, Row, Thumbnail} from "react-bootstrap";
+import { Nav, Navbar, NavItem, FormGroup, FormControl, Button, Grid, Row} from "react-bootstrap";
 import Routes from './components/routes/Routes';
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 import logo from './images/logo.jpg'
 
 class App extends Component {

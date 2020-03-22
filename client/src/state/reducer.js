@@ -1,10 +1,10 @@
 import cuid from 'cuid';
-import {mock_artworks} from "./mockdata";
+//import {mock_artworks} from "./mockdata";
 
 export const cuidFn = cuid;
 
 
-let id=0;
+//let id=0;
 
 export default function reducer (state = {
     artworks: [],
@@ -22,11 +22,11 @@ export default function reducer (state = {
         return Object.assign({}, state, { artworks});        
 
         case 'DELETE_ARTWORK':
-        artworks = state.artworks.filter(art => art.id != action.id);
+        artworks = state.artworks.filter(art => art.id !== action.id);
         return Object.assign({}, state, { artworks });
 
         case 'CHANGE_IMAGE':
-        const index = state.artworks.findIndex(art => art.id == action.artwork.id);
+        const index = state.artworks.findIndex(art => art.id === action.artwork.id);
         if (index) {state.artworks[index]=action.artwork}
         artworks=state.artworks
         return Object.assign({}, state, {artworks} )

@@ -12,7 +12,7 @@ export default class Home extends PureComponent {
               <Col sm={6} md={7}>
               <Jumbotron>
         <h2>"A picture is a poem without words."</h2>
-        <p align="right"><h3>                        Horace    </h3></p>
+        <h3 align="right">                        Horace    </h3>
         </Jumbotron>
 					</Col>
           <Col sm={6} md={5}>

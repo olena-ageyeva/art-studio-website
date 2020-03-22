@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {Grid, Row, Col, PanelGroup, Panel, Jumbotron, Image} from 'react-bootstrap'
+import {Grid, Row, Col, PanelGroup, Panel, Image} from 'react-bootstrap'
 import pic from '../../images/logo.jpg'
 
 export default class About extends PureComponent {
@@ -8,8 +8,8 @@ export default class About extends PureComponent {
         <Grid>
           <Row>
             <Col sm={6} md={8} >
-              <PanelGroup accordion id="accordion-example">
-                <Panel id="collapsible-panel-example-2" defaultExpanded>
+              <PanelGroup accordion id="accordion" defaultexpanded="true">
+                <Panel id="collapsible-panel" >
                   <Panel.Heading>
                     <Panel.Title toggle>Our Story</Panel.Title>
                   </Panel.Heading>        
@@ -42,7 +42,7 @@ export default class About extends PureComponent {
                 </PanelGroup>
               </Col>
               <Col sm={6} md={4}>
-                  <Image src={pic} center responsive></Image>
+                  <Image src={pic} center="true" responsive></Image>
               </Col>
             </Row>
           </Grid>

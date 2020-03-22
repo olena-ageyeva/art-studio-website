@@ -8,15 +8,14 @@ import Form from "./Gallery";
 import View from "./View";
 import Contact from "./ContactUs"
 
-export default () =>
-  <Switch>    
-    <React.Fragment>         
+export default () =>   
+    <>         
          <Route exact path="/" component={Home} />
          <Route exact path="/about" component={About} />
          <Route exact path="/login" component={Login} />
          {/* <Route exact path="/theme" component={ThemeSwitcher} /> */}
          <Route exact path="/gallery" component={Form} />
-         <Route exact path="/view" component={View}/>
+         <Route path="/view" component={View}/>
          <Route exact path="/contact" component={Contact}/>
-    </React.Fragment>
-</Switch>;
+    </>
+;

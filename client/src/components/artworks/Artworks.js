@@ -6,17 +6,15 @@ import GalleryImage from './Artwork'
 export default class Artworks extends React.Component{
     
 
-    render(){
-        let i=0
+    render(){        
         const galleryImages = this.props.imgs.map((img, index) => {
             return (
             <Col xs={6} md={4} key={index}>
                  <GalleryImage key={index} img={img} delete={this.props.delete} />
             </Col>)
-          });
-        //debugger
+          });        
         return(
-            <div className=".thumbnail">
+            <div className="thumbnail">
              <Grid>
                 <Row>
                 {galleryImages}
