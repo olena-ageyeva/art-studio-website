@@ -11,7 +11,9 @@ import Parent from "../inputs/Carousel_slick"
 
 
 class Gallery extends React.Component {
-    state = {
+  constructor(props){
+    super(props)
+    this.state = {
       searchName: "",
       enterName: "",
       link: "",
@@ -20,6 +22,7 @@ class Gallery extends React.Component {
       filteredArtworks: this.props.artworks,
       groupedArtworks: this.props.grouped
     }
+  }
 
     handleChange = event => {        
         this.setState({
@@ -27,9 +30,13 @@ class Gallery extends React.Component {
         })
       }
 
-      handleSearch = (value) => {        
-        this.setState({filteredArtworks: this.state.artworks.filter(item=>item.author.includes(value))})
-        this.setState({searchName: value})
+      handleSearch = (value) => {                
+        const  filteredArtworks = this.state.artworks.filter(item=>item.author.includes(value));
+        let groupedArtworks=[];
+        filteredArtworks.map(item=>{ groupedArtworks={...groupedArtworks, [item.title]: groupedArtworks[item.title] ? [...groupedArtworks[item.title],item] : [item] }}) 
+        console.log("search", filteredArtworks, groupedArtworks, this.state)      
+        this.setState({filteredArtworks,groupedArtworks, searchName: value})        
+        console.log("search", filteredArtworks, groupedArtworks, this.state)      
       }
 
       handleInput = event=>{
@@ -41,12 +48,12 @@ class Gallery extends React.Component {
       
       handleDelete=event=>{      
         this.props.deleteImage(event.target.id)
-        this.setState({artworks: this.state.artworks.filter(item=>item.id!=event.target.id)}) 
+        this.setState({artworks: this.state.artworks.filter(item=>item.id!=event.target.id)})
         
       }
       
     render() {
-      console.log('grouped', this.state.groupedArtworks)
+      
       return (        
         <div>
 
@@ -79,10 +86,10 @@ class Gallery extends React.Component {
              <h3 center="true">2017 | 2018 | 2019 | 2020  </h3> 
              {
                this.state.groupedArtworks ?
-               Object.keys(this.state.groupedArtworks).map(item=>
+               Object.keys(this.state.groupedArtworks).map((item, index)=>
                 {
                   return(
-                  <div>
+                  <div key={`${this.state.searchName+index}`}>
                    <h2>{item}</h2> <a>View</a> | <a>Edit</a> | <a>Delete</a>
                    <Parent artworks={this.state.groupedArtworks[item]} delete={this.handleDelete} />
                   </div> )                 
@@ -90,7 +97,7 @@ class Gallery extends React.Component {
               )
               : <div>No Groups</div>
             }
-            <Parent artworks={this.state.artworks} delete={this.handleDelete} />
+            <Parent key={this.state.searchName} artworks={this.state.filteredArtworks} delete={this.handleDelete} />
              
             {
             //<Test artworks={this.state.artworks} delete={this.handleDelete}/>
@@ -106,14 +113,12 @@ class Gallery extends React.Component {
       if (!this.state.artworks && this.props.artworks){                    
           this.setState({artworks: this.props.artworks, filteredArtworks: this.props.artworks.filter(item=>item.author.includes(this.state.searchName)), groupedArtworks: this.props.grouped } );         
       }
-   }
-       
+   }    
 
   }
   
 
-  const mapStateToProps = state => {
-    console.log("gallery", state)
+  const mapStateToProps = state => {   
     let groupedArtworks=[]
     //state.artworks.map(item=>{groupedArtworks={...groupedArtworks, [item.title]: {...groupedArtworks[item.title], [item.author]: item}} })     
     state.artworks.map(item=>{ groupedArtworks={...groupedArtworks, [item.title]: groupedArtworks[item.title] ? [...groupedArtworks[item.title],item] : [item] }}) 

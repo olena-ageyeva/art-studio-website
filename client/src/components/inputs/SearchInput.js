@@ -2,10 +2,10 @@ import React from 'react'
 import {Form, FormGroup, ControlLabel, Button } from 'react-bootstrap'
 
 export default class SearchInput extends React.Component {
-    constructor({update, label,value, ... props}){
+    constructor(props){
         super(props)
         this.state={
-           searchName: value
+           searchName: this.props.value
         }
 
         this.onValueChange = this.onValueChange.bind(this);
