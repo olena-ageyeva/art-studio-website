@@ -26,8 +26,9 @@ export default function reducer (state = {
         return Object.assign({}, state, { artworks });
 
         case 'CHANGE_IMAGE':
-        const index = state.artworks.findIndex(art => art.id === action.artwork.id);
-        if (index) {state.artworks[index]=action.artwork}
+        const index = state.artworks.findIndex(art => art.id == action.artwork.id);
+        if (index>=0) {state.artworks[index]=action.artwork}
+        console.log("state", index, state.artworks[index])
         artworks=state.artworks
         return Object.assign({}, state, {artworks} )
 

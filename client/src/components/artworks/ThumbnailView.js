@@ -16,7 +16,7 @@ return(
         {//<Button bsStyle="primary" href={link}>View</Button>
         }
         <Link to={link}>
-            <Button renderAs="button">
+            <Button>
                 <span>View</span>
             </Button>
         </Link>

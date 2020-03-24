@@ -12,7 +12,7 @@ class ImageView extends React.Component{
     constructor(props){
     super(props);
     const artwork=props.img  
-    console.log("constructor". artwork, props)  
+    console.log("constructor", artwork, props)  
     this.state = {       
             author: artwork.author ,
             icon: artwork.icon,
