@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/static/css/main.367d34be.chunk.css",
+    "main.js": "/static/js/main.c78583fd.chunk.js",
+    "main.js.map": "/static/js/main.c78583fd.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.cfae3202.js",
+    "runtime-main.js.map": "/static/js/runtime-main.cfae3202.js.map",
+    "static/css/2.33036c9b.chunk.css": "/static/css/2.33036c9b.chunk.css",
+    "static/js/2.5bfd374d.chunk.js": "/static/js/2.5bfd374d.chunk.js",
+    "static/js/2.5bfd374d.chunk.js.map": "/static/js/2.5bfd374d.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.0758542096143b6e879dc5b837440668.js": "/precache-manifest.0758542096143b6e879dc5b837440668.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.33036c9b.chunk.css.map": "/static/css/2.33036c9b.chunk.css.map",
+    "static/css/main.367d34be.chunk.css.map": "/static/css/main.367d34be.chunk.css.map",
+    "static/js/2.5bfd374d.chunk.js.LICENSE.txt": "/static/js/2.5bfd374d.chunk.js.LICENSE.txt",
+    "static/media/Elena.jpg": "/static/media/Elena.0fdd6b45.jpg",
+    "static/media/bootstrap.min.css": "/static/media/glyphicons-halflings-regular.fa277232.woff",
+    "static/media/logo.jpg": "/static/media/logo.38b56eb4.jpg",
+    "static/media/App.css": "/static/media/main.680f33ae.jpg",
+    "static/media/paint.jpg": "/static/media/paint.ac1f0c6e.jpg",
+    "static/media/slick-theme.css": "/static/media/slick.f97e3bbf.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cfae3202.js",
+    "static/css/2.33036c9b.chunk.css",
+    "static/js/2.5bfd374d.chunk.js",
+    "static/css/main.367d34be.chunk.css",
+    "static/js/main.c78583fd.chunk.js"
+  ]
+}

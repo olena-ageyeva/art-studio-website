@@ -12,9 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2020_03_17_181529) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "artworks", force: :cascade do |t|
     t.string "author"
     t.string "description"
