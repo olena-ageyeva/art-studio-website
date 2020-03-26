@@ -1,3 +1,12 @@
+export const AddToken = token=>{
+  return {
+    type: 'ADD_TOKEN',
+    token: token
+  }
+
+}
+
+
 export const AddArtwork = artwork=>{
     return {
       type: 'ADD_ARTWORK',

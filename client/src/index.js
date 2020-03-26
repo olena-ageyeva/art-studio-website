@@ -13,7 +13,7 @@ import reducer from './state/reducer';
 
 import { BrowserRouter as Router} from 'react-router-dom';
 import thunk from 'redux-thunk';
-import { Provider } from 'react-redux'; 
+import { Provider } from 'react-redux';
 import { fetchImages } from './state/actions/fetchArtworks'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -21,19 +21,16 @@ import "slick-carousel/slick/slick-theme.css";
 const store = createStore(reducer, applyMiddleware(thunk));
 
 store.dispatch({ type: '@@init' });
-store.dispatch(fetchImages());
+//store.dispatch(fetchImages());
 
-    ReactDOM.render(      
+    ReactDOM.render(
        <Provider store={store}>
         <Router>
-            <App/>          
+            <App/>
         </Router>
         </Provider>
         ,
       document.getElementById('root')
     );
-  
 
-  
-  
-  serviceWorker.unregister();
+serviceWorker.unregister();

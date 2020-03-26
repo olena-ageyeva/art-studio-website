@@ -53,3 +53,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rspec-rails', '~> 3.0'
 
 gem 'foreman', '~> 0.82.0'
+
+gem 'jwt'
+
+gem 'bcrypt', '~> 3.1.7'

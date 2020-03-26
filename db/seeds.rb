@@ -19,11 +19,19 @@ DATA = {
     ["Sofia", "Winter","https://farm9.staticflickr.com/8377/29690826762_9567995851_m.jpg","https://farm9.staticflickr.com/8377/29690826762_82f9b91913_o.jpg","Asya L","29690826762"],
     ["Sofia", "Winter","https://farm9.staticflickr.com/8394/29175972754_d1f8ac72b0_m.jpg","https://farm9.staticflickr.com/8394/29175972754_b101432e06_o.jpg","Alex P","29175972754"],
     ["Sofia", "Winter","https://farm9.staticflickr.com/8560/29690826482_d53bbbf827_m.jpg","https://farm9.staticflickr.com/8560/29690826482_66fffd0792_o.jpg","Sonya R","29690826482"],
+  ],
+  :user_keys =>
+  ["username", "password_digest"],
+  :users=>[
+    ["info@info.com", "password"],
+    ["admin@admin.com", "password"]
   ]
+
 }
 
 def main
-  make_artworks  
+  make_artworks
+  make_users
 end
 
 def make_artworks
@@ -35,6 +43,21 @@ def make_artworks
     new_artwork.save
   end
 end
+
+def make_users
+  DATA[:users].each do |user|
+    new_user = User.new
+    user.each_with_index do |attribute, i|
+      new_user.send(DATA[:user_keys][i]+"=", attribute)
+    end
+    new_user.save
+  end
+end
+
+
+
+
+
 
 main
 
